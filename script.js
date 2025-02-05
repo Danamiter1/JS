@@ -1,48 +1,83 @@
 // Задание №1
-function multiplyMax(a,b,c){
-    return Math.max(a,b,c)*((a+b+c)-Math.max(a,b,c)-Math.min(a,b,c))
+const student = {
+    fname: "Иван",
+    sname: "Иванов",
+    marks:[
+        {
+            subject:"Физика",
+            mark: 5,
+        },
+        {
+            subject:"Информатика",
+            mark: 5,
+        },
+        {
+            subject:"Математика",
+            mark: 2,
+        },       
+    ]
 }
-alert("Первое задание - произведение двух максимальных чисел из трёх")
-const a=+prompt("Первое число")
-const b=+prompt("Второе число")
-const c=+prompt("Третье число")
-alert(multiplyMax(a,b,c))
+
+function getInfo(student){
+    console.log('Имя: ' + student.fname)
+    console.log("Фамилия: " + student.sname)
+    student.marks.forEach(element => {
+        console.log(element.subject + " " + element.mark)
+    });
+}
+
+getInfo(student)
 
 // Задание №2
-alert("Второе задание - использование аргумента по умолчанию")
-function showMessage(name, rank="рядовой"){
-    return ("Имя: " + name + "\n" + "Звание: " + rank)
-}
 
-const name=prompt("Введите имя:")
-alert(showMessage(name))
-const rank=prompt("Введите звание:")
-alert(showMessage(name,rank))
-
-// Задание №3
-alert("Третье задание - использование функционального выражения (сумма трёх переменных, введёных до этого)")
-const sumElements = function(a,b,c){
-    return a+b+c
-}
-function invokeFunc(func, ...args){
-    return func(...args)
-}
-alert("Использование функционального выражения" + "\n" + invokeFunc(sumElements,a,b,c))
-
-// Задание №4
-alert("Четвёртое задание - стрелочная функция")
-const x = +prompt("Введите число:")
-const power = (x%2==0) ? () => x**2 : () => x**3
-alert(power(x))
-
-// Задание №5
-alert("Пятое задание - факториал числа при помощи рекурсии")
-function factorial(n){
-    if (n===1){
-        return 1
+class Student {
+    constructor(fname,sname, marks){
+        this.fname = fname;
+        this.sname = sname;
+        this.marks = marks;
     }
-    else{
-        return n*factorial(n-1)
+
+    // Задание №3
+    average() {
+        let sum = 0;
+        let count = 0;
+        for (let element of this.marks){
+            sum+=element.mark
+            count+=1
+        }
+        return sum/count;
+    }
+
+    // Задание №4
+    getMarkForSubject(subject){
+        let a = []
+        this.marks.forEach(element => {if(element.subject === subject) {a.push(element.mark)}})
+        return a
+    }
+
+    // Задание №5
+    addMarkForSubject(subject,mark){
+        this.marks.push({subject,mark})
+    }
+
+    // Задание №6 (но говорят, что delete использовать - плохой тон, поэтому дальше другой способ)
+    // deleteMarksForSubjects(subject){
+    //     for (let i = 0; i<this.marks.length; i++){
+    //         if (this.marks[i].subject === subject){
+    //             delete this.marks[i]
+    //         }
+    //     }
+    // }
+
+    deleteMarksForSubject(subject){
+        let newArrayMarks = [];
+        this.marks.forEach(element => {if(element.subject !== subject){newArrayMarks.push(element)}});
+        this.marks = newArrayMarks
     }
 }
-alert(factorial(+prompt("Введите число, для которого нужно найти факториал")))
+class Mark {
+    constructor(subject,mark){
+        this.subject = subject;
+        this.mark = mark;
+    }
+}
