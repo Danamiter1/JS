@@ -1,42 +1,57 @@
-// Задание №1
-class Figure{
-    #x;
-    #y;
-    constructor(x,y){
-        this.x=x;
-        this.y=y;
+// Задание №1 (одномерные массивы)
+
+const test = [1,2,1,4]
+function findToMin(array){
+    const minInRow = Math.min(...array)
+    const indexOfMin = array.indexOf(minInRow)
+
+    let sum = 0;
+    for (let i = 0; i<indexOfMin; i++){
+        sum += array[i];
     }
 
-    square(){
-        return undefined
-    }
+    return sum;
 }
 
-// Задание №2
-class Circle extends Figure{
-    constructor(x,y,r){
-        super(x,y);
-        this.r=r;
+console.log(findToMin(test))
+
+
+
+// Задание №1 (матрицы)
+
+const test1 = [[3, 4, 3], [2, 2, 2],[3, 4, 3]]
+
+const test2 = [[1,2,3],[4,5,6],[7,8,9]]
+
+
+function findSadlePoint(matrix){
+    let temp = [];
+    const len = matrix.length;
+
+
+    for(let i = 0; i<len;i++){
+        const minInRow = Math.min(...matrix[i])
+        let indexesOfMin = [];
+        for (let j = 0; j<len; j++){
+            if (matrix[i][j]===minInRow){
+                indexesOfMin.push(j)
+            }
+        }
+        
+        for (let indexOfMin of indexesOfMin){
+            let isSaddle = true;
+            for(let j = 0; j<len; j++){
+                if (matrix[j][indexOfMin]>minInRow){
+                    isSaddle = false;
+                }
+            }
+            if (isSaddle){
+                temp.push([i,indexOfMin])
+            }
+        }  
     }
-    square(){
-        return Math.PI*this.r**2
-    }
+
+    return temp;
 }
 
-// Задание №3
-class Rectangle extends Figure{
-    constructor(x,y,h,w){
-        super(x,y);
-        this.h=h;
-        this.w=w;
-    }
-    square(){
-        return this.h*this.w
-    }
-}
-
-// Задание №4
-const c = new Circle(1,1,2);
-console.log(c.square())
-const r = new Rectangle(1,1,2,3)
-console.log(r.square())
+console.log(findSadlePoint(test2))
