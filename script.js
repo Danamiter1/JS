@@ -1,57 +1,60 @@
-// Задание №1 (одномерные массивы)
+// Задание №1
 
-const test = [1,2,1,4]
-function findToMin(array){
-    const minInRow = Math.min(...array)
-    const indexOfMin = array.indexOf(minInRow)
+function findSame(firstAr, secondAr){
+    let sameValue = new Set();
+    let difValue = new Set();
 
-    let sum = 0;
-    for (let i = 0; i<indexOfMin; i++){
-        sum += array[i];
+    for (let element of firstAr){
+        difValue.add(element)
     }
 
-    return sum;
-}
-
-console.log(findToMin(test))
-
-
-
-// Задание №1 (матрицы)
-
-const test1 = [[3, 4, 3], [2, 2, 2],[3, 4, 3]]
-
-const test2 = [[1,2,3],[4,5,6],[7,8,9]]
-
-
-function findSadlePoint(matrix){
-    let temp = [];
-    const len = matrix.length;
-
-
-    for(let i = 0; i<len;i++){
-        const minInRow = Math.min(...matrix[i])
-        let indexesOfMin = [];
-        for (let j = 0; j<len; j++){
-            if (matrix[i][j]===minInRow){
-                indexesOfMin.push(j)
-            }
+    for (let element of secondAr){
+        if (difValue.has(element)){
+            sameValue.add(element)
         }
-        
-        for (let indexOfMin of indexesOfMin){
-            let isSaddle = true;
-            for(let j = 0; j<len; j++){
-                if (matrix[j][indexOfMin]>minInRow){
-                    isSaddle = false;
-                }
-            }
-            if (isSaddle){
-                temp.push([i,indexOfMin])
-            }
-        }  
     }
 
-    return temp;
+    return sameValue;
 }
 
-console.log(findSadlePoint(test2))
+const ar1 = [4,6,9,4436,74,2,4]
+const ar2 = [4,6,7,11,4,23,435,4]
+console.log(findSame(ar1,ar2))
+
+// Задание №2
+function countValue(array){
+    let dictionary = new Map();
+    array.forEach(element => dictionary.get(element)!==undefined ? dictionary.set(element, dictionary.get(element)+1): dictionary.set(element,1))
+    return dictionary
+}
+
+console.log(countValue(ar2))
+// Задание №3
+
+class Student{
+    constructor(group){
+        this.group = group
+    }
+}
+
+
+function getMaxGroup(array){
+    let groups = new Set();
+    let dictionary = new Map();
+
+    for (let element of array){
+        groups.add(+(element.group))
+        if (dictionary.get(element.group)!==undefined){
+            dictionary.set(element.group,dictionary.get(element.group)+1)
+        }
+        else{
+            dictionary.set(element.group,1)
+        }
+    }
+
+    const maxGroup = Math.max(...groups)
+    return dictionary.get(String(maxGroup))
+}
+
+const ar = [new Student("6204"),new Student("6201"),new Student("9302"),new Student("7204"),new Student("1201"),new Student("9302")]
+console.log(getMaxGroup(ar))
